@@ -1,0 +1,12 @@
+{
+  "name": "Themis36 Access Token",
+  "description": "This token provides access to a very special collection. It will be burned at mint. Maximum 2 access token will ever be minted.",
+  "image": "ipfs://QmcSMG3hkpvEryy6EwU1dkXB8MZJZjAcu6ZsTxzAHjPG2V",
+  "traits": [
+    {
+      "display_type": "date", 
+      "trait_type": "birthday", 
+      "value": 547068849
+    }
+  ]
+}
