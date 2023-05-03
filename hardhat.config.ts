@@ -11,6 +11,10 @@ const config: HardhatUserConfig = {
       url: process.env.POLYGON_MUMBAI_RPC,
       accounts: [process.env.DEPLOYER_PRIV_KEY!],
     },
+    polygon: {
+      url: process.env.POLYGON_RPC,
+      accounts: [process.env.DEPLOYER_PRIV_KEY!],
+    },
   },
   etherscan: {
     apiKey: process.env.POLYGONSCAN_API_KEY,
