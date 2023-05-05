@@ -40,23 +40,22 @@ describe("Themis18", function () {
     });
 
     it("Should mint both tokens with access tokens", async function () {
-        const { themis18, accessToken, owner } = await loadFixture(
-          deployContractsFixture
-        );
-      
-        // Mint and use access token 0
-        await accessToken.safeMint(owner.address);
-        await accessToken.connect(owner).approve(themis18.address, 0);
-        await themis18.connect(owner).mintWithAccessToken(0);
-        expect(await themis18.ownerOf(0)).to.equal(owner.address);
-      
-        // Mint and use access token 1
-        await accessToken.safeMint(owner.address);
-        await accessToken.connect(owner).approve(themis18.address, 1);
-        await themis18.connect(owner).mintWithAccessToken(1);
-        expect(await themis18.ownerOf(1)).to.equal(owner.address);
-      });
-      
+      const { themis18, accessToken, owner } = await loadFixture(
+        deployContractsFixture
+      );
+
+      // Mint and use access token 0
+      await accessToken.safeMint(owner.address);
+      await accessToken.connect(owner).approve(themis18.address, 0);
+      await themis18.connect(owner).mintWithAccessToken(0);
+      expect(await themis18.ownerOf(0)).to.equal(owner.address);
+
+      // Mint and use access token 1
+      await accessToken.safeMint(owner.address);
+      await accessToken.connect(owner).approve(themis18.address, 1);
+      await themis18.connect(owner).mintWithAccessToken(1);
+      expect(await themis18.ownerOf(1)).to.equal(owner.address);
+    });
 
     it("Should not allow minting with an invalid access token", async function () {
       const { themis18, owner } = await loadFixture(deployContractsFixture);
@@ -67,9 +66,11 @@ describe("Themis18", function () {
     });
 
     it("Should not allow minting if the owner doesn't have the access token", async function () {
-      const { themis18, otherAccount } = await loadFixture(
+      const { themis18, accessToken, owner, otherAccount } = await loadFixture(
         deployContractsFixture
       );
+
+      await accessToken.safeMint(owner.address);
 
       await expect(
         themis18.connect(otherAccount).mintWithAccessToken(0)
@@ -77,31 +78,31 @@ describe("Themis18", function () {
     });
 
     it("Should not allow minting if the caller doesn't own the required access token", async function () {
-        const { themis18, accessToken, owner, otherAccount } = await loadFixture(
-          deployContractsFixture
-        );
-      
-        await accessToken.safeMint(owner.address);
-        await accessToken.connect(owner).approve(themis18.address, 0);
-      
-        await expect(
-          themis18.connect(otherAccount).mintWithAccessToken(0)
-        ).to.be.revertedWith("Caller must own the required access token.");
-      });
+      const { themis18, accessToken, owner, otherAccount } = await loadFixture(
+        deployContractsFixture
+      );
 
-      it("Should not allow minting if the required access token hasn't been approved", async function () {
-        const { themis18, accessToken, owner } = await loadFixture(
-          deployContractsFixture
-        );
-      
-        await accessToken.safeMint(owner.address);
-      
-        await expect(
-          themis18.connect(owner).mintWithAccessToken(0)
-        ).to.be.revertedWith("The access token has not been approved and cannot be burnt.");
-      });
-      
-      
+      await accessToken.safeMint(owner.address);
+      await accessToken.connect(owner).approve(themis18.address, 0);
+
+      await expect(
+        themis18.connect(otherAccount).mintWithAccessToken(0)
+      ).to.be.revertedWith("Caller must own the required access token.");
+    });
+
+    it("Should not allow minting if the required access token hasn't been approved", async function () {
+      const { themis18, accessToken, owner } = await loadFixture(
+        deployContractsFixture
+      );
+
+      await accessToken.safeMint(owner.address);
+
+      await expect(
+        themis18.connect(owner).mintWithAccessToken(0)
+      ).to.be.revertedWith(
+        "The access token has not been approved and cannot be burnt."
+      );
+    });
   });
 
   describe("Token URI", function () {

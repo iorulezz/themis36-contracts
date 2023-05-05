@@ -29,25 +29,26 @@ contract Themis18 is ERC721 {
 
     // since there is only 2 access tokens there will only be two tokens for this contract as well
     function mintWithAccessToken(uint256 accessTokenId) external {
+        require(
+            accessTokenId < 2,
+            "Only tokens 0 and 1 can be minted with the access token."
+        );
+
         Themis36AccessToken accessToken = Themis36AccessToken(
             _accessTokenAddress
         );
-        require(
-            accessTokenId == 0 || accessTokenId == 1,
-            "Only tokens 0 and 1 can be minted with the access token."
-        );
-        try accessToken.ownerOf(accessTokenId) returns (address owner) {
-            require(
-                owner == msg.sender,
-                "Caller must own the required access token."
-            );
-        } catch (bytes memory) {
-            revert("Caller must own the required access token.");
-        }
 
-        try accessToken.burn(accessTokenId) {} catch (bytes memory) {
-            revert("The access token has not been approved and cannot be burnt.");
-        }
+        require(
+            accessToken.ownerOf(accessTokenId) == msg.sender,
+            "Caller must own the required access token."
+        );
+
+        require(
+            accessToken.getApproved(accessTokenId) == address(this),
+            "The access token has not been approved and cannot be burnt."
+        );
+
+        accessToken.burn(accessTokenId);
         _safeMint(msg.sender, accessTokenId);
     }
 }
