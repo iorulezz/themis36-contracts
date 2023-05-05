@@ -2,52 +2,52 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "./Themis36AccessToken.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract Themis18 is ERC721 {
-    using Counters for Counters.Counter;
-
-    Counters.Counter private _tokenIdCounter;
-    string private __baseURI = "";
-
     address private _accessTokenAddress;
 
     constructor(address accessTokenAddress) ERC721("Themis18", "T18") {
         _accessTokenAddress = accessTokenAddress;
     }
 
-    function _baseURI() internal view override returns (string memory) {
-        return __baseURI;
+    function _baseURI() internal pure override returns (string memory) {
+        return "ipfs://QmWBAB4Ky7CSHNJFhJjUF4L9HWCUbvGtyLrmQxSrXbAWZ6/";
+    }
+
+    function tokenURI(
+        uint256 _tokenId
+    ) public view virtual override returns (string memory) {
+        _requireMinted(_tokenId);
+        return string.concat(_baseURI(), Strings.toString(_tokenId), ".json");
+    }
+
+    function contractURI() public pure returns (string memory) {
+        return string.concat(_baseURI(), "contract.json");
     }
 
     // since there is only 2 access tokens there will only be two tokens for this contract as well
-    function mintWithAccessToken(uint256 tokenId) external {
-        ERC721Burnable accessToken = ERC721Burnable(_accessTokenAddress);
+    function mintWithAccessToken(uint256 accessTokenId) external {
+        Themis36AccessToken accessToken = Themis36AccessToken(
+            _accessTokenAddress
+        );
         require(
-            tokenId == 0 || tokenId == 1,
+            accessTokenId == 0 || accessTokenId == 1,
             "Only tokens 0 and 1 can be minted with the access token."
         );
-        require(
-            accessToken.ownerOf(tokenId) == msg.sender,
-            "Caller must own the required access token."
-        );
-
-        accessToken.burn(tokenId);
-        _safeMint(msg.sender, tokenId);
-    }
-
-    function merge() external {
-        require(balanceOf(msg.sender) >= 2, "Caller must hold tokens 0 and 1.");
-        require(
-            ownerOf(0) == msg.sender && ownerOf(1) == msg.sender,
-            "Caller must hold tokens 0 and 1."
-        );
-
-        uint256 totalSupply = _tokenIdCounter.current();
-        for (uint256 i = totalSupply; i < totalSupply + 5; i++) {
-            _tokenIdCounter.increment();
-            _safeMint(msg.sender, i);
+        try accessToken.ownerOf(accessTokenId) returns (address owner) {
+            require(
+                owner == msg.sender,
+                "Caller must own the required access token."
+            );
+        } catch (bytes memory) {
+            revert("Caller must own the required access token.");
         }
+
+        try accessToken.burn(accessTokenId) {} catch (bytes memory) {
+            revert("The access token has not been approved and cannot be burnt.");
+        }
+        _safeMint(msg.sender, accessTokenId);
     }
 }

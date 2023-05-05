@@ -1,0 +1,12 @@
+{
+  "name": "Themis18",
+  "description": "Teenager Themis in the narrow streets of Athens. Looking forward to the adult version of himself!",
+  "image": "ipfs://QmQ5F1aos1Lrkwv4KLRegPJBDtz1xVbUTotq89Ywe7GvsE/0.png",
+  "traits": [
+    {
+      "display_type": "date", 
+      "trait_type": "birthday", 
+      "value": 547068849
+    }
+  ]
+}

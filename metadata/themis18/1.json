@@ -1,0 +1,12 @@
+{
+  "name": "Themis18",
+  "description": "Teenager Antonis on his moped cruising around Rethymno. Looking forward to moving to the big city.",
+  "image": "ipfs://QmQ5F1aos1Lrkwv4KLRegPJBDtz1xVbUTotq89Ywe7GvsE/1.png",
+  "traits": [
+    {
+      "display_type": "date", 
+      "trait_type": "birthday", 
+      "value": 572876010
+    }
+  ]
+}
