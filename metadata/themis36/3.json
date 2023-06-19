@@ -1,0 +1,11 @@
+{
+  "name": "Themis36",
+  "description": "The sugarcube paradox: A night of alien encounters.",
+  "image": "ipfs://QmYpEjspfsMU2WB3WNJd8owDDjh8soKsCU5kmNTSBebx48/3.png",
+  "traits": [
+    {
+      "trait_type": "Location", 
+      "value": "A'dam"
+    }
+  ]
+}

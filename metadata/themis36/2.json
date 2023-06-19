@@ -1,0 +1,11 @@
+{
+  "name": "Themis36",
+  "description": "Concert-goers extraordinaire. Following the smoke to the riff-filled land.",
+  "image": "ipfs://QmYpEjspfsMU2WB3WNJd8owDDjh8soKsCU5kmNTSBebx48/2.png",
+  "traits": [
+    {
+      "trait_type": "Location", 
+      "value": "013"
+    }
+  ]
+}

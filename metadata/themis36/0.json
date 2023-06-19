@@ -1,0 +1,11 @@
+{
+  "name": "Themis36",
+  "description": "First meeting at CSLab. The shared timeline starts.",
+  "image": "ipfs://QmYpEjspfsMU2WB3WNJd8owDDjh8soKsCU5kmNTSBebx48/0.png",
+  "traits": [
+    {
+      "trait_type": "Location", 
+      "value": "AUEB"
+    }
+  ]
+}

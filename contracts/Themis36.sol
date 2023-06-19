@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity 0.8.18;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
@@ -13,7 +13,7 @@ contract Themis36 is ERC721 {
     }
 
     function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://QmWBAB4Ky7CSHNJFhJjUF4L9HWCUbvGtyLrmQxSrXbAWZ6/";
+        return "ipfs://QmemCDN8MjFMEnqKqfDn3igsk2mkV41LMjXbPyzey1XZvp/";
     }
 
     function tokenURI(
@@ -27,9 +27,9 @@ contract Themis36 is ERC721 {
         return string.concat(_baseURI(), "contract.json");
     }
 
-    // since there is only 2 access tokens there will only be two tokens for this contract as well
     function unlock() external {
         require(!_unlocked, "The collection has already been unlocked.");
+        _unlocked = true;
         ERC721 themis18 = ERC721(_themis18Address);
 
         require(
@@ -38,10 +38,8 @@ contract Themis36 is ERC721 {
             "Caller must own both Themis18 tokens to unlock."
         );
 
-        for (uint i = 0; i < 5; i++) {
+        for (uint i = 0; i < 7; i++) {
             _safeMint(msg.sender, i);
         }
-
-        _unlocked = true;
     }
 }

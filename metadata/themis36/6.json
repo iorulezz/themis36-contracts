@@ -1,0 +1,11 @@
+{
+  "name": "Themis36",
+  "description": "A glimpse of the future. Onwards and upwards.",
+  "image": "ipfs://QmYpEjspfsMU2WB3WNJd8owDDjh8soKsCU5kmNTSBebx48/6.png",
+  "traits": [
+    {
+      "trait_type": "Location", 
+      "value": "Crete"
+    }
+  ]
+}

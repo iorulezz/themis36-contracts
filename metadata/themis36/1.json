@@ -1,0 +1,11 @@
+{
+  "name": "Themis36",
+  "description": "On the streets of Athens. Walking from spot to spot, sipping kiosk booze and rolling up cigs. Night after night, the same ritual.",
+  "image": "ipfs://QmYpEjspfsMU2WB3WNJd8owDDjh8soKsCU5kmNTSBebx48/1.png",
+  "traits": [
+    {
+      "trait_type": "Location", 
+      "value": "Kentro"
+    }
+  ]
+}
